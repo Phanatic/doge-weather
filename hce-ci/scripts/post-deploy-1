@@ -1,9 +1,0 @@
-#!/bin/bash
-
-source "custom-task-base/task-base"
-
-task() {
-  echo 'Post Deploy 1'
-}
-
-main "$@"
