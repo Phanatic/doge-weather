@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd "$source_dir"
+crystal deps
+crystal build --release src/doge-weather.cr
+cp -pr "$source_dir" "$output_dir"

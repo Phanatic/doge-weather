@@ -1,0 +1,44 @@
+resource_types:
+- name: helm
+  type: docker-image
+  source:
+    repository: linkyard/concourse-helm-resource
+
+resources:
+- name: doge-weather
+  type: git
+  source:
+    uri: https://github.com/gregarcara/doge-weather
+    branch: master
+- name: doge-weather-chart
+  type: git
+  source:
+    uri: https://github.com/gregarcara/charts
+    branch: master
+- name: doge-weather-image
+  type: docker-image
+  source:
+    repository: gregoryarcara/doge-weather
+    username: {{docker-username}}
+    password: {{docker-password}}
+- name: doge-weather-helm
+  type: helm
+  source:
+    cluster_url: {{cluster-url}}
+    token: {{cluster-token}}
+
+jobs:
+- name: doge-weather
+  public: true
+  plan:
+  - get: doge-weather-chart
+  - get: doge-weather
+    trigger: true
+  - task: build
+    file: doge-weather/ci/build.yml
+  - task: test
+    file: doge-weather/ci/test.yml
+  - put: doge-weather-image
+    params: {build: doge-weather}
+  - put: doge-weather-helm
+    chart: doge-weather-chart/doge-weather-0.1.0.tgz
