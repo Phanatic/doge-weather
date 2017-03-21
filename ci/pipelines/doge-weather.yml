@@ -25,6 +25,7 @@ resources:
   type: helm
   source:
     cluster_url: {{cluster-url}}
+    cluster_ca: {{cluster-ca}}
     token: {{cluster-token}}
 
 jobs:
@@ -41,4 +42,6 @@ jobs:
   - put: doge-weather-image
     params: {build: doge-weather}
   - put: doge-weather-helm
-    chart: doge-weather-chart/doge-weather-0.1.0.tgz
+    params:
+      replace: true
+      chart: doge-weather-chart/doge-weather-0.1.0.tgz
