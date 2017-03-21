@@ -1,8 +1,9 @@
 #!/bin/bash
 
-source_dir="${1:?App source directory is required first arg}"
-output_dir="${2:?Build output directory is required second arg}"
+source_dir="${1:?Input directory is required first arg}"
+output_dir="${2:?Output directory is required second arg}"
 
 cd "$source_dir"
 crystal spec
+cd ..
 cp -pr "$source_dir" "$output_dir"
