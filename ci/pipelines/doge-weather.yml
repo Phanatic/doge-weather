@@ -9,7 +9,7 @@ resources:
   type: git
   source:
     uri: https://github.com/gregarcara/doge-weather
-    branch: master
+    branch: helm
 - name: doge-weather-chart
   type: git
   source:
